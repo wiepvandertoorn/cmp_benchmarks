@@ -1,6 +1,6 @@
 # cmp_benchmarks
 
-The `cmp_benchmarks.sh` provides a wrapper around google/benchmark/tools/compare.py. It can be used to compare benchmarks between versions and to filter out significant differences in runtime. 
+The `cmp_benchmarks.sh` provides a wrapper around `google/benchmark/tools/compare.py`. It can be used to compare benchmarks between versions and to filter out significant differences in runtime. 
 
 **NOTE**: the compare.py utility relies on the scipy package which can be installed using [these instructions](https://www.scipy.org/install.html).
 
