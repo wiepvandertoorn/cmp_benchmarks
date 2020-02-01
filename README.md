@@ -39,7 +39,7 @@ In execs mode, `<baseline>` and `<contender>` should be `full/paths/to/built/ben
 
 The executables are run to obtain the results.
 
-### 3. Mode "results"
+### 3. Mode `results`
 
 In results mode, `<baseline>` and `<contender>` should be `full/paths/to/benchmark/results`. 
     These results should be JSON output files. The results will simply be loaded from the output file.
