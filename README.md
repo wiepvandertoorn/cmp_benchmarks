@@ -28,7 +28,7 @@ In build mode, `<baseline>` and `<contender>` should be the tags to use in `git 
 
 Build mode uses two additional, optional arguments: `-g` and `-r`. 
 `-g` can be used to set the `/path/to/executable/compiler`. Defaults to g++-7.
-`-r` can be used to set the `relative/path/from/-s/to/benchmark/suite`. Defaults to `/test/performance`.
+`-r` can be used to set the `relative/path/from/-s/to/benchmark/suite`. Defaults to `./test/performance`.
 
 The respective tags are checked out (submodules are updated), build using `Cmake` and `make`, and run to obtain the results. 
 
@@ -46,28 +46,27 @@ In results mode, `<baseline>` and `<contender>` should be `full/paths/to/benchma
 
 **NOTE**:  This mode was not yet tested.
 
-## Optional arguments
+## Optional Arguments
 
-`-f` can be used to set a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).
+`-f` can be used to set a threshold `[0, 1]` for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).
 `-o` can be used to set the `full/path/to/save/results`. Defaults to the current directory.
 
 
 ## Output
 
-What compare.py does is for the every benchmark from the first run it looks for the benchmark with exactly the
-same name in the second run, and then compares the results. If the names differ, the benchmark is omitted 
-from the diff. The diff values in Time and CPU are calculated as ( contender - baseline) / |baseline|.
+`compare.py` compares all identically named benchmarks in both runs. If the names differ between runs, the benchmark is omitted 
+from the diff. The diff values in Time and CPU are calculated as `( contender - baseline) / |baseline|`.
 
-What cmp_benchmark.sh does is filter and store all these diffs. Four types of files are created and all are
-stored both as ";" delimited .csv file, and formatted as a readable table in a .txt file:
+`cmp_benchmark.sh` filters and stores all these diffs. Four types of files are created and all are
+stored both as `;`-delimited `.csv` file, and formatted as a readable table `.txt` file:
 
-* **all_diffs**, containing the differences for all benchmarks `<baseline>` and `<contender>` have in common.
-* **significant_diffs**, containing the benchmarks with asignificant differences in time. 
-    all_diffs is filtered based on `-t <threshold>` which defaults to 0.05 (5% difference), see section Optional arguments.
+* **all_diffs**, containing the diffs for all common benchmarks.
+* **significant_diffs**, containing the benchmarks with a significant time diff.
+    all_diffs is filtered based on `-t <threshold>` which defaults to 0.05 (5% difference), see section Optional Arguments.
 * **significant_decr**, containing the benchmarks for which there was a significant decrease in time. 
-* **significant_incr**, ontaining the benchmarks for which there was a significant increase in time. 
+* **significant_incr**, containing the benchmarks for which there was a significant increase in time. 
 
-Example all_diffs output:
+Example `all_diffs.txt` output:
 ```
 Benchmarkfile                               Benchmark                                                              Time     CPU
 bit_manipulation_benchmark                  is_power_of_two_popcount<unsigned>                                     -0.0658  -0.0657
@@ -81,14 +80,14 @@ charconv_from_chars_benchmark               from_char<uint8_t>                  
 ...
 ```
 
-Additionally, for each bechmark file the full output of `compare.py` is stored in the folder `/indiv_benchmrks`.
+Additionally, for each benchmark file the full output of `compare.py` is stored in the folder `result/path/<name_tag>/indiv_benchmrks`.
 
 ## Requirements
 
 The `cmp_benchmarks.sh` requires that:
 * benchmarks are uniquely defined by their name
 * benchmark executables do not have an extension
-* benmark names do not contain the character ";"
+* benchmark names do not contain the character `;`.
 
 The `cmp_benchmarks.sh` was tested on Ubuntu 18.04.3 LTS.
 
