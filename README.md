@@ -27,8 +27,8 @@ In build mode, `<baseline>` and `<contender>` should be the tags to use in `git 
     In this mode, setting the option `-s` is required and should be set to `/full/path/to/source/code` (git repository). 
 
 Build mode uses two additional, optional arguments: `-g` and `-r`. 
-`-g` can be used to set the `/path/to/executable/compiler`. Defaults to g++-7.
-`-r` can be used to set the `relative/path/from/-s/to/benchmark/suite`. Defaults to `./test/performance`.
+* `-g` can be used to set the `/path/to/executable/compiler`. Defaults to g++-7.
+* `-r` can be used to set the `relative/path/from/-s/to/benchmark/suite`. Defaults to `./test/performance`.
 
 The respective tags are checked out (submodules are updated), build using `Cmake` and `make`, and run to obtain the results. 
 
@@ -48,8 +48,8 @@ In results mode, `<baseline>` and `<contender>` should be `full/paths/to/benchma
 
 ## Optional Arguments
 
-`-f` can be used to set a threshold `[0, 1]` for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).
-`-o` can be used to set the `/full/path/to/save/results`. Defaults to the current directory.
+* `-f` can be used to set a threshold `[0, 1]` for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).
+* `-o` can be used to set the `/full/path/to/save/results`. Defaults to the current directory.
 
 
 ## Output
