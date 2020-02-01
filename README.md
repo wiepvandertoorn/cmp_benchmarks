@@ -7,7 +7,7 @@ The `cmp_benchmarks.sh` provides a wrapper around google/benchmark/tools/compare
 The program is invoked like:
 ``` bash
 $ ./cmp_benchmarks.sh -m <mode> -n <name_tag> -b <baseline> -c <contender> \
-[-s </source/code/path> [-r relative/benchm/suite/path] [-t threshold] [-o results/path] [-g compiler] 
+[-s </source/code/path> [-r relative/benchm/suite/path] [-t threshold] [-o /results/path] [-g compiler] 
 ```
 
 The arguments `<baseline>` and `<contender>` are `<mode>` dependend.
@@ -49,7 +49,7 @@ In results mode, `<baseline>` and `<contender>` should be `full/paths/to/benchma
 ## Optional Arguments
 
 `-f` can be used to set a threshold `[0, 1]` for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).
-`-o` can be used to set the `full/path/to/save/results`. Defaults to the current directory.
+`-o` can be used to set the `/full/path/to/save/results`. Defaults to the current directory.
 
 
 ## Output
@@ -79,8 +79,8 @@ charconv_from_chars_benchmark               from_char<int8_t>                   
 charconv_from_chars_benchmark               from_char<uint8_t>                                                     -0.0135  -0.0130
 ...
 ```
-
-Additionally, for each benchmark file the full output of `compare.py` is stored in the folder `result/path/<name_tag>/indiv_benchmrks`.
+The results are stored in the folder `/result/path/<name_tag>`.
+Additionally, for each benchmark file the full output of `compare.py` is stored in the folder `/result/path/<name_tag>/indiv_benchmrks`.
 
 ## Requirements
 
