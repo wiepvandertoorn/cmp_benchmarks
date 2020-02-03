@@ -2,8 +2,6 @@
 
 The `cmp_benchmarks.sh` provides a wrapper around `google/benchmark/tools/compare.py`. It can be used to compare benchmarks between versions and to filter out significant differences in runtime. 
 
-**NOTE**: the compare.py utility relies on the scipy package which can be installed using [these instructions](https://www.scipy.org/install.html).
-
 The program is invoked like:
 ``` bash
 $ ./cmp_benchmarks.sh -m <mode> -n <name_tag> -b <baseline> -c <contender> \
@@ -88,6 +86,9 @@ The `cmp_benchmarks.sh` requires that:
 * benchmarks are uniquely defined by their name
 * benchmark executables do not have an extension
 * benchmark names do not contain the character `;`.
+* python3 is in `PATH` as python
+
+The `compare.py` utility relies on the scipy package which can be installed using [these instructions](https://www.scipy.org/install.html).
 
 The `cmp_benchmarks.sh` was tested on Ubuntu 18.04.3 LTS.
 
