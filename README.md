@@ -8,8 +8,8 @@ $ ./cmp_benchmarks.sh -m <mode> -n <name_tag> -b <baseline> -c <contender> \
 [-s </source/code/path> [-r relative/benchm/suite/path] [-t threshold] [-o /results/path] [-g compiler] 
 ```
 
-The arguments `<baseline>` and `<contender>` are `<mode>` dependend.
-    `<name_tag>` should be set to an identifier for the comparison, e.g. `3.0.0-vs-3.0.1`.
+* The arguments `<baseline>` and `<contender>` are `<mode>` dependend.
+* `<name_tag>` should be set to an identifier for the comparison, e.g. `3.0.0-vs-3.0.1`.
 
 ## Modes of operation
 
