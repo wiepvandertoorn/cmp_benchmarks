@@ -24,10 +24,9 @@ usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
                       -r is optional. relative/path/from/-s/to/benchmark/suite. Defaults to ${def_rel_perf_path}.\n\
     \n\
     Optional arguments:\n\
-    -f : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to ${threshold} (5% difference).\n\
+    -t : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to ${threshold} (5% difference).\n\
     -o : full/path/to/save/results . Defaults to current directory.\n\
     -j : number of jobs. This number is passed to make. Defaults to ${jobct}.\n"
-
 
 while getopts ":m:n:b:c:s:t:o:r:g:j:" option ; do
     case "${option}"
