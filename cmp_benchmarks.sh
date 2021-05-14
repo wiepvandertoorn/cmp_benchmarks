@@ -18,7 +18,7 @@ usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
     Optional arguments:\n\
     -f : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).\n\
     -o : full/path/to/save/results . Defaults to current directory.\n\
-    -j : number of jobs. This number is passed to make. Defaults to -1.\n"
+    -j : number of jobs. This number is passed to make. Defaults to 1.\n"
 
 jobct=1 # default value
 
@@ -58,7 +58,7 @@ if ! [[ "$mode" =~ ^(results|execs|build)$ ]]; then
 fi
 
 if [[ "$jobct" -lt 1 ]]; then
-    echo -e "ERROR! number of jobs must be greater than 1.\n";
+    echo -e "ERROR! number of jobs must be at least 1.\n"
     echo -e "$usage"
     exit 1
 fi
