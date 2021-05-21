@@ -1,4 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# default values
+jobct=1
+def_rel_perf_path="test/performance"
+threshold=0.05
+
+
 usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
 [-s source/code/path] [-r relative/benchm/suite/path] [-t threshold] [-o results/path] [-g compiler] \n\
     \n\
@@ -16,11 +24,9 @@ usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
                       -r is optional. relative/path/from/-s/to/benchmark/suite. Defaults to ${def_rel_perf_path}.\n\
     \n\
     Optional arguments:\n\
-    -f : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).\n\
+    -f : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to ${threshold} (5% difference).\n\
     -o : full/path/to/save/results . Defaults to current directory.\n\
-    -j : number of jobs. This number is passed to make. Defaults to 1.\n"
-
-jobct=1 # default value
+    -j : number of jobs. This number is passed to make. Defaults to ${jobct}.\n"
 
 while getopts ":m:n:b:c:s:t:o:r:g:j:" option ; do
     case "${option}"
@@ -64,7 +70,6 @@ if [[ "$jobct" -lt 1 ]]; then
 fi
 
 
-def_rel_perf_path="test/performance"
 if [ $mode = "build" ]; then
     if [[ -z ${source_code+x} ]]; then
         echo -e "ERROR! Path to source code is required in 'build' mode.\n"
@@ -184,7 +189,6 @@ done
 
 # split stats in signif/signif_incr/signif_decr based on threshold
 # sed statement skips first header line of results file
-if [[ -z ${threshold+x} ]]; then threshold=0.05 ; fi
 cat "${results}.csv" | sed 1d | \
     awk -v thr=$threshold -v s="${signif}.csv" -v si="${signif_incr}.csv" -v sd="${signif_decr}.csv" \
     'BEGIN {FS =";"} $3 <= - thr { print >> s ; print >> sd } $3 >= thr { print >> s ; print >> si }'
