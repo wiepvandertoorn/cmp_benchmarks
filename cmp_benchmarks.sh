@@ -28,7 +28,6 @@ usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
     -o : full/path/to/save/results . Defaults to current directory.\n\
     -j : number of jobs. This number is passed to make. Defaults to ${jobct}.\n"
 
-
 while getopts ":m:n:b:c:s:t:o:r:g:j:" option ; do
     case "${option}"
         in
