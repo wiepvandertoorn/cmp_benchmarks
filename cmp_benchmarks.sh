@@ -99,14 +99,14 @@ if [ $mode  = "build" ]; then
     git checkout $baseline
     git submodule update
     cd $wrkdir/build/$baseline
-    cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler
+    cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler -DCMAKE_BUILD_TYPE=Release
     make -j ${jobct}
 
     cd $source_code
     git checkout $contender
     git submodule update
     cd $wrkdir/build/$contender
-    cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler
+    cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler -DCMAKE_BUILD_TYPE=Release
     make -j ${jobct}
 
     baseline=$wrkdir/build/$baseline
