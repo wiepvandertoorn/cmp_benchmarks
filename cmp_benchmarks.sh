@@ -17,9 +17,12 @@ usage="Usage: ./cmp_bnchm.sh -m mode -n name_tag -b baseline -c contender \
     \n\
     Optional arguments:\n\
     -f : a threshold [0, 1] for filtering significant results, e.g. 0.2 . Defaults to 0.05 (5% difference).\n\
-    -o : full/path/to/save/results . Defaults to current directory.\n"
+    -o : full/path/to/save/results . Defaults to current directory.\n\
+    -j : number of jobs. This number is passed to make. Defaults to 1.\n"
 
-while getopts ":m:n:b:c:s:t:o:r:g:" option ; do
+jobct=1 # default value
+
+while getopts ":m:n:b:c:s:t:o:r:g:j:" option ; do
     case "${option}"
         in
             m) mode=${OPTARG};;
@@ -31,6 +34,7 @@ while getopts ":m:n:b:c:s:t:o:r:g:" option ; do
             o) outpathp=${OPTARG%/};;
             r) rel_perf_path=${OPTARG%/};;
             g) compiler=${OPTARG};;
+            j) jobct=${OPTARG};;
     esac
 done
 
@@ -41,8 +45,8 @@ if [[ -z ${mode+x} || -z ${name_tag+x} || -z ${baseline+x} || -z ${contender+x} 
 fi
 
 shift $((OPTIND -1))
-if [[ $# -ge 1 ]] ; then 
-    echo -e "ERROR! Unused arguments: $@\n" 
+if [[ $# -ge 1 ]] ; then
+    echo -e "ERROR! Unused arguments: $@\n"
     echo -e "$usage"
     exit 1
 fi
@@ -52,6 +56,13 @@ if ! [[ "$mode" =~ ^(results|execs|build)$ ]]; then
     echo -e "$usage"
     exit 1
 fi
+
+if [[ "$jobct" -lt 1 ]]; then
+    echo -e "ERROR! number of jobs must be at least 1.\n"
+    echo -e "$usage"
+    exit 1
+fi
+
 
 def_rel_perf_path="test/performance"
 if [ $mode = "build" ]; then
@@ -64,9 +75,9 @@ if [ $mode = "build" ]; then
         echo "Relative path from source code to benchmark suite was not given (option -r )."
         echo "Relative path is set to: ${def_rel_perf_path}"
         if ! [[ -d $source_code/$def_rel_perf_path ]]; then
-            echo "ERROR! $source_code/$def_rel_perf_path does not exist." 
+            echo "ERROR! $source_code/$def_rel_perf_path does not exist."
             exit 1
-        else 
+        else
             rel_perf_path=$def_rel_perf_path
         fi
     fi
@@ -74,14 +85,14 @@ if [ $mode = "build" ]; then
         echo "Compiler was not given (option -g ). Compiler is set to g++-7 by default."
         compiler="g++-7"
     fi
-    command -v $compiler >/dev/null || { echo "ERROR! $compiler was not found in PATH."; exit 1; }       
-    
+    command -v $compiler >/dev/null || { echo "ERROR! $compiler was not found in PATH."; exit 1; }
+
 fi
 #---------------------------------------------------------------------------------------------#
 # save directory of cmp_benchmarks.sh
 wrkdir=${PWD%/}
 # In 'build' mode, checkout the respective tags, and build the benchmark executables
-if [ $mode  = "build" ]; then 
+if [ $mode  = "build" ]; then
     mkdir -p {build/$baseline,build/$contender}
 
     cd $source_code
@@ -89,14 +100,14 @@ if [ $mode  = "build" ]; then
     git submodule update
     cd $wrkdir/build/$baseline
     cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler
-    make
+    make -j ${jobct}
 
     cd $source_code
     git checkout $contender
     git submodule update
     cd $wrkdir/build/$contender
     cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler
-    make
+    make -j ${jobct}
 
     baseline=$wrkdir/build/$baseline
     contender=$wrkdir/build/$contender
