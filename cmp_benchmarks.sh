@@ -106,6 +106,7 @@ if [ $mode  = "build" ]; then
     cd $wrkdir/build/$baseline
     cmake $source_code/$rel_perf_path -DCMAKE_CXX_COMPILER=$compiler -DCMAKE_BUILD_TYPE=Release
     make -j ${jobct}
+    cd ../..
 
     cd $source_code
     git checkout $contender
